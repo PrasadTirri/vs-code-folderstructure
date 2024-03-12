@@ -1,23 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import Folder from "./components/Folder";
+
+import data from "./data/DataFolder";
+import useTranverse from "./hook/use-transverse-tree";
 
 function App() {
+  const [exploreData, setExploreData] = useState(data);
+  console.log(data);
+
+  const { insertNode } = useTranverse();
+
+  const handleTransverseNode = (folderId, item, isFolder) => {
+    const finalRes = insertNode(exploreData, folderId, item, isFolder);
+    setExploreData(finalRes);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Folder
+        handleTransverseNode={handleTransverseNode}
+        explored={exploreData}
+      />
     </div>
   );
 }
