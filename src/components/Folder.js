@@ -1,78 +1,76 @@
 import React, { useState } from "react";
 import "../App.css";
 
-const Folder = ({ explored, handleTransverseNode }) => {
-  console.log(explored);
+const Folder = ({ explored, handleInsertNode }) => {
   const [expand, setExpand] = useState(false);
   const [showInput, setShowInput] = useState({
     visibility: false,
     isFolder: null,
   });
 
-  const handleNewFolder = (e, isFolder) => {
+  const handleAddFolder = (e, isFolder) => {
     e.stopPropagation();
+    setExpand(true);
     setShowInput({
       visibility: true,
-      isFolder: isFolder,
+      isFolder,
     });
   };
 
   const onAddFolder = (e) => {
     if (e.keyCode === 13 && e.target.value) {
-      handleTransverseNode(explored.id, e.target.value, showInput.isFolder);
-      setShowInput({ ...showInput, visibility: false });
+      handleInsertNode(explored.id, e.target.value, showInput.isFolder);
+      setShowInput({
+        ...showInput,
+        visibility: false,
+      });
     }
   };
+  console.log(explored);
   if (explored.isFolder) {
     return (
       <div>
-        <div className="folder" onClick={() => setExpand(!expand)}>
+        <div className="header" onClick={() => setExpand(!expand)}>
           <span>📁 {explored.name}</span>
-          <div className="btns">
-            <button
-              onClick={(e) => handleNewFolder(e, true)}
-              className="folder_btn"
-            >
-              📂Folder +
+          <div className="btns_container">
+            <button onClick={(e) => handleAddFolder(e, true)} className="btn">
+              Add Folder +
             </button>
-            <button
-              onClick={(e) => handleNewFolder(e, false)}
-              className="file_btn"
-            >
-              📃File +
+            <button onClick={(e) => handleAddFolder(e, false)} className="btn">
+              Add File +
             </button>
           </div>
         </div>
-        <div>
+
+        <div className="files" style={{ display: expand ? "block" : "none" }}>
           {showInput.visibility && (
             <div>
               <span>{showInput.isFolder ? "📁" : "📄"}</span>
               <input
-                type="text"
-                onKeyDown={onAddFolder}
-                autoFocus
                 onBlur={() => setShowInput({ ...showInput, visibility: false })}
-                name=""
-                id=""
+                onKeyDown={onAddFolder}
+                className="input"
+                autoFocus
+                type="text"
               />
             </div>
           )}
-        </div>
-        <div className="files" style={{ display: expand ? "block" : "none" }}>
-          {explored.items.map((item) => (
-            <Folder
-              handleTransverseNode={handleTransverseNode}
-              explored={item}
-              key={item.id}
-            />
-          ))}
+          {explored.items.map((item) => {
+            return (
+              <Folder
+                handleInsertNode={handleInsertNode}
+                explored={item}
+                key={item.id}
+              />
+            );
+          })}
         </div>
       </div>
     );
   } else {
     return (
-      <div className="container">
-        <div className="file" style={{ marginLeft: "20px" }}>
+      <div>
+        <div className="header">
           <span>📄 {explored.name}</span>
         </div>
       </div>

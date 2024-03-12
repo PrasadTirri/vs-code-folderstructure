@@ -1,28 +1,24 @@
-.folder {
-  margin: 3px;
-  background-color: rgb(242, 238, 232);
-  padding: 5px;
+* {
+  background-color: rgb(9, 9, 9);
+  color: white;
+}
+.header {
+  margin: 5px;
   display: flex;
 }
-.btns {
-  margin-left: 30%;
+.btns_container {
+  display: flex;
+  margin-left: 20%;
+}
+.btn {
+  background-color: rgb(76, 76, 76);
 }
 .files {
-  margin-left: 10px;
-  padding: 5px;
+  margin-left: 15px;
+  border-bottom: 1px solid rgb(126, 125, 125);
+  border-top: 1px solid rgb(126, 125, 125);
 }
-.file {
-  margin-left: 10px;
-  border-bottom: 1px solid rgb(218, 216, 216);
-  padding: 5px;
-}
-.folder_btn {
-  border: 1px solid gray;
-  border-radius: 2px;
-  margin: 2px;
-}
-.file_btn {
-  border: 1px solid gray;
-  border-radius: 2px;
-  margin: 2px;
+.input {
+  background-color: gainsboro;
+  color: black;
 }
